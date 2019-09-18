@@ -22,7 +22,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Tangled.Database\Tangled.Database.csproj" />
     <ProjectReference Include="..\Tangled.Logic\Tangled.Logic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Binaries\Tangled.Database.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
