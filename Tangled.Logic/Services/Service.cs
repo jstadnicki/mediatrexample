@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore.Internal;
-using Tangled.Api.Database;
-using Tangled.Api.DTOs;
-using Tangled.Api.Models;
-using Tangled.Api.Repository;
-using Tangled.Api.Validators;
+using Tangled.Database.Database;
+using Tangled.Database.Repository;
+using Tangled.Logic.DTOs;
+using Tangled.Logic.Models;
+using Tangled.Logic.Validators;
 
-namespace Tangled.Api.Services
+namespace Tangled.Logic.Services
 {
     class Service : IService
     {
@@ -45,7 +45,7 @@ namespace Tangled.Api.Services
                 var dbUser = this.mapper.Map<CreateUserDto, User>(dto);
                 return this.repository.CreateUserAsync(dbUser);
             }
-            throw new InvalidOperationException(validationResult.Errors.Join());
+            throw new InvalidOperationException(string.Join(',', validationResult.Errors));
         }
 
         public Task DeleteAsync(int id)
@@ -69,7 +69,7 @@ namespace Tangled.Api.Services
                 return resultUser;
 
             }
-            throw new InvalidOperationException(validationResult.Errors.Join());
+            throw new InvalidOperationException(string.Join(',', validationResult.Errors));
         }
     }
 }

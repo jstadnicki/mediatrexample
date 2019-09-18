@@ -21,4 +21,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Tangled.Database\Tangled.Database.csproj" />
+    <ProjectReference Include="..\Tangled.Logic\Tangled.Logic.csproj" />
+  </ItemGroup>
+
 </Project>

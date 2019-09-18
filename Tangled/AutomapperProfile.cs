@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Tangled.Api.Database;
-using Tangled.Api.DTOs;
-using Tangled.Api.Models;
+using Tangled.Database.Database;
+using Tangled.Logic.DTOs;
+using Tangled.Logic.Models;
 
 namespace Tangled.Api
 {

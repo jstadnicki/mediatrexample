@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Tangled.Api.Database;
+using Tangled.Database.Database;
 
-namespace Tangled.Api.Repository
+namespace Tangled.Database.Repository
 {
     class Repository : IRepository
     {

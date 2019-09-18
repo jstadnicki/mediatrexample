@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Tangled.Api.DTOs;
-using Tangled.Api.Models;
-using Tangled.Api.Services;
+using Tangled.Logic.DTOs;
+using Tangled.Logic.Models;
+using Tangled.Logic.Services;
 
 namespace Tangled.Api.Controllers
 {

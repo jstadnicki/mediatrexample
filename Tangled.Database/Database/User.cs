@@ -1,8 +1,9 @@
-﻿namespace Tangled.Api.DTOs
+﻿namespace Tangled.Database.Database
 {
-    public class UpdateUserDto
+    public class User
     {
         public int Id { get; set; }
+        public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }

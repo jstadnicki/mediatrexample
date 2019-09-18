@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Tangled.Api.DTOs;
-using Tangled.Api.Models;
+using Tangled.Logic.DTOs;
+using Tangled.Logic.Models;
 
-namespace Tangled.Api.Services
+namespace Tangled.Logic.Services
 {
     public interface IService
     {

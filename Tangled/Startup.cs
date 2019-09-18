@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using Tangled.Api.Database;
-using Tangled.Api.Validators;
+using Tangled.Database.Database;
+using Tangled.Logic.Validators;
 
 namespace Tangled.Api
 {
@@ -35,7 +35,6 @@ namespace Tangled.Api
             services.AddDbContext<EFContext>(
                 o =>
                 {
-                    //o.UseSqlServer(this.Configuration.GetConnectionString("default"));
                     o.UseInMemoryDatabase("tangled");
                 });
             this.mapperConfiguration = new MapperConfiguration(o => o.AddProfile<AutomapperProfile>());

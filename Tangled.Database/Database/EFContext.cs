@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Tangled.Api.Database
+namespace Tangled.Database.Database
 {
-    internal class EFContext : DbContext
+    public class EFContext : DbContext
     {
         public EFContext(DbContextOptions<EFContext> options) : base(options)
         {

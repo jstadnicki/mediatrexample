@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Tangled.Api.Database;
+using Tangled.Database.Database;
 
-namespace Tangled.Api.Repository
+namespace Tangled.Database.Repository
 {
-    internal interface IRepository
+    public interface IRepository
     {
         Task<List<User>> GetAllUsersAsync();
         Task DeleteUserByIdAsync(int id);
