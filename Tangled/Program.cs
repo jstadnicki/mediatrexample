@@ -14,10 +14,7 @@ namespace Tangled.Api
         {
             return WebHost
                 .CreateDefaultBuilder(args)
-                .ConfigureServices(service =>
-                {
-                    service.AddAutofac();
-                })
+                .ConfigureServices(service => service.AddAutofac())
                 .UseStartup<Startup>();
         }
     }

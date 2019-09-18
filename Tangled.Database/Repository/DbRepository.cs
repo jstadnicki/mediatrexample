@@ -5,11 +5,11 @@ using Tangled.Database.Database;
 
 namespace Tangled.Database.Repository
 {
-    class Repository : IRepository
+    class DbRepository : IDbRepository
     {
         private readonly EFContext database;
 
-        public Repository(EFContext database)
+        public DbRepository(EFContext database)
         {
             this.database = database;
         }

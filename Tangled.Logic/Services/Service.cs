@@ -13,18 +13,18 @@ namespace Tangled.Logic.Services
 {
     class Service : IService
     {
-        private readonly IRepository repository;
+        private readonly IDbRepository _dbRepository;
         private readonly IMapper mapper;
         private readonly CreateUserDtoValidator createValidator;
         private readonly UpdateUserDtoValidator updateValidator;
 
         public Service(
-            IRepository repository,
+            IDbRepository dbRepository,
             IMapper mapper,
             CreateUserDtoValidator createValidator,
             UpdateUserDtoValidator updateValidator)
         {
-            this.repository = repository;
+            this._dbRepository = dbRepository;
             this.mapper = mapper;
             this.createValidator = createValidator;
             this.updateValidator = updateValidator;
@@ -32,7 +32,7 @@ namespace Tangled.Logic.Services
 
         public async Task<List<UserViewModel>> GetAllAsync()
         {
-            var dbUsers = await this.repository.GetAllUsersAsync();
+            var dbUsers = await this._dbRepository.GetAllUsersAsync();
             var vmUsers = this.mapper.Map<List<User>, List<UserViewModel>>(dbUsers);
             return vmUsers;
         }
@@ -43,17 +43,17 @@ namespace Tangled.Logic.Services
             if (validationResult.IsValid)
             {
                 var dbUser = this.mapper.Map<CreateUserDto, User>(dto);
-                return this.repository.CreateUserAsync(dbUser);
+                return this._dbRepository.CreateUserAsync(dbUser);
             }
             throw new InvalidOperationException(string.Join(',', validationResult.Errors));
         }
 
         public Task DeleteAsync(int id)
-            => this.repository.DeleteUserByIdAsync(id);
+            => this._dbRepository.DeleteUserByIdAsync(id);
 
         public async Task<UserViewModel> GetAsync(int id)
         {
-            var dbUser = await this.repository.GetByIdAsync(id);
+            var dbUser = await this._dbRepository.GetByIdAsync(id);
             var vmUser = this.mapper.Map<User, UserViewModel>(dbUser);
             return vmUser;
         }
@@ -64,7 +64,7 @@ namespace Tangled.Logic.Services
             if (validationResult.IsValid)
             {
                 var dbUser = this.mapper.Map<UpdateUserDto, User>(dto);
-                var updatedUser = await this.repository.UpdateUserAsync(dbUser);
+                var updatedUser = await this._dbRepository.UpdateUserAsync(dbUser);
                 var resultUser = this.mapper.Map<User, UserViewModel>(updatedUser);
                 return resultUser;
 

@@ -4,7 +4,7 @@ using Tangled.Database.Database;
 
 namespace Tangled.Database.Repository
 {
-    public interface IRepository
+    public interface IDbRepository
     {
         Task<List<User>> GetAllUsersAsync();
         Task DeleteUserByIdAsync(int id);

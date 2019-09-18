@@ -1,15 +1,13 @@
-﻿using System.Reflection;
+﻿using System.Linq;
+using System.Reflection;
 using Autofac;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using Tangled.Database.Database;
-using Tangled.Logic.Validators;
 
 namespace Tangled.Api
 {
@@ -31,27 +29,30 @@ namespace Tangled.Api
             {
                 o.SwaggerDoc("v1", new Info());
             });
-
-            services.AddDbContext<EFContext>(
-                o =>
-                {
-                    o.UseInMemoryDatabase("tangled");
-                });
-            this.mapperConfiguration = new MapperConfiguration(o => o.AddProfile<AutomapperProfile>());
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            builder.RegisterAssemblyTypes(assembly)
-                   .AsImplementedInterfaces();
-            builder.RegisterType<CreateUserDtoValidator>();
-            builder.RegisterType<UpdateUserDtoValidator>();
-            builder.RegisterType<AutomapperProfile>();
-            builder
-                .Register(ctx => this.mapperConfiguration.CreateMapper())
-                .As<IMapper>()
-                .InstancePerLifetimeScope();
+
+            var modules =
+                Assembly.GetExecutingAssembly()
+                    .GetReferencedAssemblies()
+                    .Where(a => a.Name.StartsWith("Tangled"));
+
+            var assemblies = modules.Select(m => Assembly.Load(m))
+                .ToList();
+
+
+            foreach (var a in assemblies)
+            {
+                builder.RegisterAssemblyModules(a);
+            }
+
+            this.mapperConfiguration = new MapperConfiguration(o => o.AddMaps(assemblies));
+
+            builder.Register(ctx => this.mapperConfiguration.CreateMapper())
+                   .As<IMapper>()
+                   .InstancePerLifetimeScope();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
