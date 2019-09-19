@@ -11,6 +11,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Binaries\Tangled.Database.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\Tangled.Logic\bin\Debug\netcoreapp2.2\Tangled.Logic.dll" Link="Binaries\Tangled.Logic.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Binaries\Tangled.Database.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.4.0" />
     <PackageReference Include="AutoMapper" Version="9.0.0" />
@@ -24,12 +37,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tangled.Logic\Tangled.Logic.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Binaries\Tangled.Database.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

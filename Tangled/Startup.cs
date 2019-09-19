@@ -35,22 +35,18 @@ namespace Tangled.Api
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            //string path = AppContext.BaseDirectory;
-            //var files = Directory.GetFiles(path, "Tangled.*.dll")
-            //    .Where(x => !x.Contains("Tangled.Api.dll"));
+            var path = AppContext.BaseDirectory+"Binaries";
+            var files = Directory.GetFiles(path, "Tangled.*.dll")
+                .Where(x => !x.Contains("Tangled.Api.dll"));
 
-            var files = Assembly.GetEntryAssembly().GetReferencedAssemblies();
-            //.Where(a => a.Name.StartsWith("Tangled"));
+            var assemblies = files.Select(Assembly.LoadFile).ToList();
 
-            //var assemblies = files.Select(m => Assembly.Load(m))
-            //    .ToList();
+            foreach (var a in assemblies)
+            {
+                builder.RegisterAssemblyModules(a);
+            }
 
-            //foreach (var a in assemblies)
-            //{
-            //    builder.RegisterAssemblyModules(a);
-            //}
-
-            //this.mapperConfiguration = new MapperConfiguration(o => o.AddMaps(assemblies));
+            this.mapperConfiguration = new MapperConfiguration(o => o.AddMaps(assemblies));
 
             builder.Register(ctx => this.mapperConfiguration.CreateMapper())
                    .As<IMapper>()
