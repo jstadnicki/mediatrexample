@@ -1,6 +1,8 @@
-﻿namespace Tangled.Logic.DTOs
+﻿using MediatR;
+
+namespace Tangled.Logic.Requests
 {
-    public class CreateUserDto
+    public class CreateUserRequest : IRequest
     {
         public string Email { get; set; }
         public string FirstName { get; set; }

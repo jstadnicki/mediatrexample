@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using Tangled.Logic.DTOs;
+using Tangled.Logic.Requests;
 
 namespace Tangled.Logic.Validators
 {
-    public class CreateUserDtoValidator : AbstractValidator<CreateUserDto>
+    public class CreateUserDtoValidator : AbstractValidator<CreateUserRequest>
     {
         public CreateUserDtoValidator()
         {

@@ -38,8 +38,8 @@ namespace Tangled.Api
             //string path = AppContext.BaseDirectory;
             //var files = Directory.GetFiles(path, "Tangled.*.dll")
             //    .Where(x => !x.Contains("Tangled.Api.dll"));
-            
-            //.GetReferencedAssemblies()
+
+            var files = Assembly.GetEntryAssembly().GetReferencedAssemblies();
             //.Where(a => a.Name.StartsWith("Tangled"));
 
             //var assemblies = files.Select(m => Assembly.Load(m))

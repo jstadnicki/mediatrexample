@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Tangled.Database.Database;
-using Tangled.Logic.DTOs;
 using Tangled.Logic.Models;
+using Tangled.Logic.Requests;
 
 namespace Tangled.Logic
 {
@@ -9,8 +9,8 @@ namespace Tangled.Logic
     {
         public AutomapperProfile()
         {
-            this.CreateMap<CreateUserDto, User>();
-            this.CreateMap<UpdateUserDto, User>();
+            this.CreateMap<CreateUserRequest, User>();
+            this.CreateMap<UpdateUserRequest, User>();
             this.CreateMap<User, UserViewModel>();
         }
     }

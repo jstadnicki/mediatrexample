@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Tangled.Logic.DTOs;
+using Tangled.Api.DTOs;
 using Tangled.Logic.Models;
-using Tangled.Logic.Services;
+using Tangled.Logic.Requests;
 
 namespace Tangled.Api.Controllers
 {
@@ -11,30 +13,60 @@ namespace Tangled.Api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IService service;
+        private readonly IMediator mediator;
+        private readonly IMapper mapper;
 
-        public UsersController(IService service)
-            => this.service = service;
+        public UsersController(IMediator mediator, IMapper mapper)
+        {
+            this.mediator = mediator;
+            this.mapper = mapper;
+        }
 
         [HttpGet]
         public Task<List<UserViewModel>> Get()
-            => this.service.GetAllAsync();
+        {
+            IRequest<List<UserViewModel>> getAllUsersRequest = new GetAllUsersRequest();
+            return this.mediator.Send(getAllUsersRequest);
+        }
 
         [HttpPut]
         public Task<UserViewModel> Put(UpdateUserDto dto)
-            => this.service.UpdateAsync(dto);
+        {
+            var request = this.mapper.Map<UpdateUserDto, UpdateUserRequest>(dto);
+            return this.mediator.Send(request);
+        }
 
         [HttpPost]
         public Task Post(CreateUserDto dto)
-            => this.service.CreateAsync(dto);
+        {
+            var request = this.mapper.Map<CreateUserDto, CreateUserRequest>(dto);
+            return this.mediator.Send(request);
+        }
 
         [HttpDelete]
-        public Task Delete(int id)
-            => this.service.DeleteAsync(id);
+        public async Task<IActionResult> Delete(int id)
+        {
+            var request = new DeleteUserRequest
+            {
+                UserId = id
+            };
+            await this.mediator.Send(request);
+
+            return this.Ok();
+        }
 
         [HttpGet]
         [Route("{id}")]
         public Task<UserViewModel> Get(int id)
-            => this.service.GetAsync(id);
+        {
+            var request = new GetUserRequest
+            {
+                UserId = id
+            };
+
+            return this.mediator.Send(request);
+        }
     }
+
+
 }

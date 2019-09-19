@@ -1,6 +1,9 @@
-﻿namespace Tangled.Logic.DTOs
+﻿using MediatR;
+using Tangled.Logic.Models;
+
+namespace Tangled.Logic.Requests
 {
-    public class UpdateUserDto
+    public class UpdateUserRequest : IRequest<UserViewModel>
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

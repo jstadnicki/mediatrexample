@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using Tangled.Logic.DTOs;
+using Tangled.Logic.Requests;
 
 namespace Tangled.Logic.Validators
 {
-    public class UpdateUserDtoValidator : AbstractValidator<UpdateUserDto> { }
+    public class UpdateUserDtoValidator : AbstractValidator<UpdateUserRequest> { }
 }
