@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Tangled.Database.Repository;
+using Tangled.Logic.Repositories;
 using Tangled.Logic.Requests;
 
 namespace Tangled.Logic.Handlers
@@ -19,7 +19,7 @@ namespace Tangled.Logic.Handlers
             DeleteUserRequest request, 
             CancellationToken cancellationToken)
         {
-            this.dbRepository.DeleteUserByIdAsync(request.UserId);
+            this.dbRepository.DeleteUserByIdAsync(request);
             return Task.FromResult(new Unit());
         }
     }

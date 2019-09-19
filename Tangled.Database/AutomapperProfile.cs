@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using Tangled.Logic.Models;
-using Tangled.Logic.Requests;
 
-namespace Tangled.Logic
+namespace Tangled.Database
 {
     //public class AutomapperProfile : Profile
     //{

@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.2.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Tangled.Logic\Tangled.Logic.csproj" />
+  </ItemGroup>
+
 </Project>

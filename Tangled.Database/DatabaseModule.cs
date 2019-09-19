@@ -9,7 +9,7 @@ namespace Tangled.Database
     {
         protected override void Load(ContainerBuilder builder)
         {
-           builder.RegisterType<DbRepository>().As<IDbRepository>();
+           //builder.RegisterType<DbRepository>().As<IDbRepository>();
 
             builder.Register(c =>
             {

@@ -2,9 +2,8 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Tangled.Database.Database;
-using Tangled.Database.Repository;
 using Tangled.Logic.Models;
+using Tangled.Logic.Repositories;
 using Tangled.Logic.Requests;
 
 namespace Tangled.Logic.Handlers
@@ -26,8 +25,7 @@ namespace Tangled.Logic.Handlers
             GetUserRequest request,
             CancellationToken cancellationToken)
         {
-            var dbUser = await this.dbRepository.GetByIdAsync(request.UserId);
-            var vmUser = this.mapper.Map<User, UserViewModel>(dbUser);
+            var vmUser = await this.dbRepository.GetByIdAsync(request);
             return vmUser;
         }
     }
