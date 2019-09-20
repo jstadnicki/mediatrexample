@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Tangled.Database.Database;
 using Tangled.Database.Repository;
+using Tangled.Logic.Repositories;
 
 namespace Tangled.Database
 {
@@ -9,7 +10,8 @@ namespace Tangled.Database
     {
         protected override void Load(ContainerBuilder builder)
         {
-           //builder.RegisterType<DbRepository>().As<IDbRepository>();
+            System.Diagnostics.Debug.WriteLine("DatabaseModule");
+            builder.RegisterType<DbRepository>().As<IDbRepository>();
 
             builder.Register(c =>
             {
@@ -19,6 +21,4 @@ namespace Tangled.Database
             }).As<EFContext>();
         }
     }
-
-
 }

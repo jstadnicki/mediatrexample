@@ -6,7 +6,7 @@ using Tangled.Logic.Requests;
 
 namespace Tangled.Logic.Handlers
 {
-    public class DeleteUserRequestHandler : IRequestHandler<DeleteUserRequest>
+    public class DeleteUserRequestHandler : IRequestHandler<DeleteUserRequest,RequestResult>
     {
         private readonly IDbRepository dbRepository;
 
@@ -15,12 +15,12 @@ namespace Tangled.Logic.Handlers
             this.dbRepository = dbRepository;
         }
 
-        public Task<Unit> Handle(
+        public Task<RequestResult> Handle(
             DeleteUserRequest request, 
             CancellationToken cancellationToken)
         {
             this.dbRepository.DeleteUserByIdAsync(request);
-            return Task.FromResult(new Unit());
+            return Task.FromResult(new RequestResult());
         }
     }
 }

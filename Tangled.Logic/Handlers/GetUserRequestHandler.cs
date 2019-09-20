@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using MediatR;
 using Tangled.Logic.Models;
 using Tangled.Logic.Repositories;
@@ -10,14 +9,10 @@ namespace Tangled.Logic.Handlers
 {
     public class GetUserRequestHandler : IRequestHandler<GetUserRequest, UserViewModel>
     {
-        private readonly IMapper mapper;
         private readonly IDbRepository dbRepository;
 
-        public GetUserRequestHandler(
-            IMapper mapper, 
-            IDbRepository dbRepository)
+        public GetUserRequestHandler(IDbRepository dbRepository)
         {
-            this.mapper = mapper;
             this.dbRepository = dbRepository;
         }
 

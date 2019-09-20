@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Autofac;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +17,7 @@ namespace Tangled.Api
 {
     public class Startup
     {
-        private MapperConfiguration mapperConfiguration;
+        //private MapperConfiguration mapperConfiguration;
 
         public Startup(IConfiguration configuration)
         {
@@ -35,20 +37,22 @@ namespace Tangled.Api
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            var path = AppContext.BaseDirectory+"Binaries";
+            var path = AppContext.BaseDirectory + "Binaries";
             var files = Directory.GetFiles(path, "Tangled.*.dll")
-                .Where(x => !x.Contains("Tangled.Api.dll"));
+                .Where(x => !x.Contains("Tangled.Logic.dll"));
 
             var assemblies = files.Select(Assembly.LoadFile).ToList();
+            var executingAssembly = Assembly.GetExecutingAssembly();
+            assemblies.Add(executingAssembly);
 
-            foreach (var a in assemblies)
-            {
-                builder.RegisterAssemblyModules(a);
-            }
+            builder.RegisterAssemblyModules(assemblies.ToArray());
+            var single = executingAssembly.GetReferencedAssemblies()
+                .Single(x => x.Name.Contains("Tangled.Logic"));
 
-            this.mapperConfiguration = new MapperConfiguration(o => o.AddMaps(assemblies));
+            builder.RegisterAssemblyModules(Assembly.Load(single));
+            var mapperConfiguration = new MapperConfiguration(o => o.AddMaps(assemblies));
 
-            builder.Register(ctx => this.mapperConfiguration.CreateMapper())
+            builder.Register(ctx => mapperConfiguration.CreateMapper())
                    .As<IMapper>()
                    .InstancePerLifetimeScope();
         }

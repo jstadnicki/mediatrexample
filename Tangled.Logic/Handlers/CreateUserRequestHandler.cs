@@ -9,31 +9,32 @@ using Tangled.Logic.Validators;
 
 namespace Tangled.Logic.Handlers
 {
-    public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest>
+    public class CreateUserRequestHandler : IRequestHandler<CreateUserRequest, RequestResult>
     {
         private readonly CreateUserDtoValidator createValidator;
         private readonly IMapper mapper;
         private readonly IDbRepository dbRepository;
 
         public CreateUserRequestHandler(
-            CreateUserDtoValidator createValidator, 
-            IMapper mapper, 
-            IDbRepository dbRepository)
+            CreateUserDtoValidator createValidator,
+            IMapper mapper,
+            IDbRepository dbRepository
+            )
         {
             this.createValidator = createValidator;
             this.mapper = mapper;
             this.dbRepository = dbRepository;
         }
 
-        public Task<Unit> Handle(
-            CreateUserRequest request, 
+        public async Task<RequestResult> Handle(
+            CreateUserRequest request,
             CancellationToken cancellationToken)
         {
             var validationResult = this.createValidator.Validate(request);
             if (validationResult.IsValid)
             {
-                this.dbRepository.CreateUserAsync(request);
-                return Task.FromResult(new Unit());
+                await this.dbRepository.CreateUserAsync(request);
+                return new RequestResult();
             }
             throw new InvalidOperationException(string.Join(',', validationResult.Errors));
         }

@@ -1,4 +1,9 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using Autofac;
+using MediatR;
+using Tangled.Logic.Handlers;
+using Tangled.Logic.Models;
+using Tangled.Logic.Requests;
 using Tangled.Logic.Validators;
 
 namespace Tangled.Logic
@@ -10,6 +15,9 @@ namespace Tangled.Logic
             builder.RegisterAssemblyTypes().AsImplementedInterfaces();
             builder.RegisterType<CreateUserDtoValidator>();
             builder.RegisterType<UpdateUserDtoValidator>();
+            builder.RegisterType<CreateUserRequestHandler>().As<IRequestHandler<CreateUserRequest, RequestResult>>();
+            builder.RegisterType<GetUserRequestHandler>().As<IRequestHandler<GetUserRequest, UserViewModel>>();
+            builder.RegisterType<GetAllUsersRequestHandler>().As<IRequestHandler<GetAllUsersRequest, List<UserViewModel>>>();
         }
     }
 }

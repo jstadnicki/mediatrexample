@@ -2,7 +2,7 @@
 
 namespace Tangled.Logic.Requests
 {
-    public class CreateUserRequest : IRequest
+    public class CreateUserRequest : IRequest<RequestResult>
     {
         public string Email { get; set; }
         public string FirstName { get; set; }
